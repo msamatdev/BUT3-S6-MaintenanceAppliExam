@@ -1,13 +1,16 @@
 from dataclasses import dataclass
 import streamlit as st
+import dotenv
+import os
+import requests
+
+dotenv.load_dotenv()
 
 
-rates = { # TODO: update with API call
-    "EUR": 1,
-    "USD": 1.1,
-    "JPY": 130,
-    "GBP": 0.86
-}
+API_KEY = os.getenv('API_KEY')
+
+
+RATES = requests.get(f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/USD').json()['conversion_rates']
 
 
 @dataclass
