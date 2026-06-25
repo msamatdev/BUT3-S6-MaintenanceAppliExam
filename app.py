@@ -1,6 +1,6 @@
 import streamlit as st
 from app_functions import (
-    rates, 
+    RATES, 
     add_to_history, 
     invert_currencies, 
     Calculation,
@@ -30,14 +30,14 @@ amount = st.number_input("Montant :", min_value=0.0, format="%.2f")
 
 from_currency = st.selectbox(
     "De :",
-    list(rates.keys()),
+    list(RATES.keys()),
     key="from_currency"
 )
 
 
 to_currency = st.selectbox(
     "Vers :",
-    list(rates.keys()),
+    list(RATES.keys()),
     key="to_currency"
 )
 
@@ -45,7 +45,7 @@ to_currency = st.selectbox(
 if st.button("Convertir"):
     if amount > 0:
         if from_currency != to_currency:
-            result = amount * rates[to_currency] / rates[from_currency]
+            result = amount * RATES[to_currency] / RATES[from_currency]
             st.success(f"{amount} {from_currency} = {result:.2f} {to_currency}")
             add_to_history(Calculation(
                 amount=amount,
