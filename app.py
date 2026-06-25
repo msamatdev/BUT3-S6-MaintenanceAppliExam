@@ -7,7 +7,8 @@ st.title("Convertisseur de devises")
 rates = {
     "EUR": 1,
     "USD": 1.1,
-    "JPY": 130
+    "JPY": 130,
+    "GBP": 0.86
 }
 
 
