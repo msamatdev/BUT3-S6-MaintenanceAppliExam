@@ -52,7 +52,7 @@ if st.button("Convertir"):
                 result=result,
                 from_currency=from_currency,
                 to_currency=to_currency
-            ))
+            ), st.session_state.history)
         else:
             st.error("Les devises doivent être différentes")
     else:

@@ -29,5 +29,6 @@ def init_conversion_history():
     st.session_state.history = []
 
 
-def add_to_history(calculation: Calculation):
-    st.session_state.history.append(calculation)
+def add_to_history(calculation: Calculation, history):
+    history.append(calculation)
+
