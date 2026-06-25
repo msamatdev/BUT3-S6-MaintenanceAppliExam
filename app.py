@@ -1,26 +1,30 @@
 import streamlit as st
+from app_functions import (
+    rates, 
+    add_to_history, 
+    invert_currencies, 
+    Calculation,
+    init_conversion_history
+)
 
 
 st.title("Convertisseur de devises")
 
 
-rates = {
-    "EUR": 1,
-    "USD": 1.1,
-    "JPY": 130,
-    "GBP": 0.86
-}
-
-
-# Currencies select value initialization
+# Initialization
 if "from_currency" not in st.session_state:
     st.session_state.from_currency = "EUR"
 
 
 if "to_currency" not in st.session_state:
     st.session_state.to_currency = "USD"
+    
+    
+if "history" not in st.session_state:
+    init_conversion_history()
 
 
+# UI
 amount = st.number_input("Montant :", min_value=0.0, format="%.2f")
 
 
@@ -38,18 +42,17 @@ to_currency = st.selectbox(
 )
 
 
-def invert_currencies():
-    """
-    Callback function that invert the two selected currencies
-    """
-    st.session_state.from_currency, st.session_state.to_currency = st.session_state.to_currency, st.session_state.from_currency,
-
-
 if st.button("Convertir"):
     if amount > 0:
         if from_currency != to_currency:
             result = amount * rates[to_currency] / rates[from_currency]
             st.success(f"{amount} {from_currency} = {result:.2f} {to_currency}")
+            add_to_history(Calculation(
+                amount=amount,
+                result=result,
+                from_currency=from_currency,
+                to_currency=to_currency
+            ))
         else:
             st.error("Les devises doivent être différentes")
     else:
